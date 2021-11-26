@@ -33,6 +33,17 @@ class BusinessesController < ApplicationController
 
     # Update the business data
 
+    def update
+        business = Business.find_by(id: params[:id])
+        if business && business.update(business_params)
+            render json: business, status: :ok
+        else  
+            render json: {error: 'Business not found'}, status_code: :not_found
+        end
+
+
+    end
+
 
 
 
@@ -42,7 +53,7 @@ class BusinessesController < ApplicationController
 
 
     def business_params 
-        params.permit(:name, :category, :city,:state :zip_code)
+        params.permit(:name, :category, :city, :state, :zip_code)
     end
 
 
